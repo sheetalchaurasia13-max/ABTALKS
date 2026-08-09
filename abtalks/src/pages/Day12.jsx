@@ -1,10 +1,25 @@
 import { useState } from "react";
 
 function Day12() {
+  const [repoUrl, setRepoUrl] = useState("");
+  const [commitUrl, setCommitUrl] = useState("");
+  const [liveUrl, setLiveUrl] = useState("");
+  const [linkedinUrl, setLinkedinUrl] = useState("");
+  
+  const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Check if required fields are filled
+    if (!repoUrl.trim() || !commitUrl.trim() || !linkedinUrl.trim()) {
+      setErrorMessage("⚠️ Please fill in all required fields (GitHub Repo, Commit URL, and LinkedIn Post) before submitting.");
+      return;
+    }
+
+    // Clear error and trigger success state
+    setErrorMessage("");
     setIsSubmitted(true);
   };
 
@@ -116,31 +131,37 @@ function Day12() {
         </section>
       ) : (
         /* IF NOT SUBMITTED: SHOW FORM */
-        <>
+        <form onSubmit={handleSubmit}>
           {/* GITHUB */}
 
           <section className="submission-card">
 
             <p className="eyebrow">
-              01 / GITHUB
+              01 / GITHUB *
             </p>
 
             <label>
-              Repository URL
+              Repository URL *
             </label>
 
             <input
               type="url"
               placeholder="https://github.com/username/project"
+              value={repoUrl}
+              onChange={(e) => setRepoUrl(e.target.value)}
+              required
             />
 
             <label>
-              Commit URL
+              Commit URL *
             </label>
 
             <input
               type="url"
               placeholder="https://github.com/.../commit/..."
+              value={commitUrl}
+              onChange={(e) => setCommitUrl(e.target.value)}
+              required
             />
 
           </section>
@@ -150,7 +171,7 @@ function Day12() {
           <section className="submission-card">
 
             <p className="eyebrow">
-              02 / LIVE DEPLOYMENT
+              02 / LIVE DEPLOYMENT (OPTIONAL)
             </p>
 
             <label>
@@ -160,6 +181,8 @@ function Day12() {
             <input
               type="url"
               placeholder="https://your-project.vercel.app"
+              value={liveUrl}
+              onChange={(e) => setLiveUrl(e.target.value)}
             />
 
           </section>
@@ -169,16 +192,19 @@ function Day12() {
           <section className="submission-card">
 
             <p className="eyebrow">
-              03 / LINKEDIN
+              03 / LINKEDIN *
             </p>
 
             <label>
-              LinkedIn post URL
+              LinkedIn post URL *
             </label>
 
             <input
               type="url"
               placeholder="https://linkedin.com/posts/..."
+              value={linkedinUrl}
+              onChange={(e) => setLinkedinUrl(e.target.value)}
+              required
             />
 
           </section>
@@ -202,16 +228,30 @@ function Day12() {
 
           </section>
 
+          {/* ERROR WARNING MESSAGE */}
+          {errorMessage && (
+            <div style={{
+              color: '#ef4444',
+              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              border: '1px solid #ef4444',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              marginBottom: '16px',
+              fontSize: '0.875rem'
+            }}>
+              {errorMessage}
+            </div>
+          )}
+
           {/* SUBMIT BUTTON */}
 
           <button 
-            type="button" 
+            type="submit" 
             className="submit-button"
-            onClick={handleSubmit}
           >
             Submit Day 12 →
           </button>
-        </>
+        </form>
       )}
 
     </main>
