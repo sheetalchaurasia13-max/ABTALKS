@@ -17,7 +17,20 @@ function Dashboard() {
 
         <div>
           <p className="eyebrow">
-            ABTALKS / DASHBOARD
+            <a 
+              href="/" 
+              style={{ 
+                color: "inherit", 
+                textDecoration: "none", 
+                cursor: "pointer",
+                transition: "opacity 0.2s"
+              }}
+              onMouseOver={(e) => (e.target.style.opacity = "0.7")}
+              onMouseOut={(e) => (e.target.style.opacity = "1")}
+            >
+              ABTALKS
+            </a>{" "}
+            / DASHBOARD
           </p>
 
           <h1>
