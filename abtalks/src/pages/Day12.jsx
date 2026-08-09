@@ -12,13 +12,12 @@ function Day12() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if required fields are filled
+    // Custom Validation (prevents browser floating popups)
     if (!repoUrl.trim() || !commitUrl.trim() || !linkedinUrl.trim()) {
       setErrorMessage("⚠️ Please fill in all required fields (GitHub Repo, Commit URL, and LinkedIn Post) before submitting.");
       return;
     }
 
-    // Clear error and trigger success state
     setErrorMessage("");
     setIsSubmitted(true);
   };
@@ -130,8 +129,8 @@ function Day12() {
           </div>
         </section>
       ) : (
-        /* IF NOT SUBMITTED: SHOW FORM */
-        <form onSubmit={handleSubmit}>
+        /* IF NOT SUBMITTED: SHOW FORM WITH Custom Validation */
+        <form onSubmit={handleSubmit} noValidate>
           {/* GITHUB */}
 
           <section className="submission-card">
@@ -149,7 +148,6 @@ function Day12() {
               placeholder="https://github.com/username/project"
               value={repoUrl}
               onChange={(e) => setRepoUrl(e.target.value)}
-              required
             />
 
             <label>
@@ -161,7 +159,6 @@ function Day12() {
               placeholder="https://github.com/.../commit/..."
               value={commitUrl}
               onChange={(e) => setCommitUrl(e.target.value)}
-              required
             />
 
           </section>
@@ -204,7 +201,6 @@ function Day12() {
               placeholder="https://linkedin.com/posts/..."
               value={linkedinUrl}
               onChange={(e) => setLinkedinUrl(e.target.value)}
-              required
             />
 
           </section>
@@ -228,16 +224,17 @@ function Day12() {
 
           </section>
 
-          {/* ERROR WARNING MESSAGE */}
+          {/* INLINE SCROLL-PROOF ERROR MESSAGE */}
           {errorMessage && (
             <div style={{
-              color: '#ef4444',
-              backgroundColor: 'rgba(239, 68, 68, 0.1)',
+              color: '#f87171',
+              backgroundColor: 'rgba(239, 68, 68, 0.15)',
               border: '1px solid #ef4444',
               padding: '12px 16px',
               borderRadius: '8px',
               marginBottom: '16px',
-              fontSize: '0.875rem'
+              fontSize: '0.875rem',
+              fontWeight: '500'
             }}>
               {errorMessage}
             </div>
